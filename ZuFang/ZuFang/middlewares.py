@@ -5,7 +5,10 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+import redis
+import hashlib
 from scrapy import signals
+from scrapy.exceptions import IgnoreRequest
 
 
 class ZufangSpiderMiddleware(object):
@@ -102,4 +105,23 @@ class ZufangDownloaderMiddleware(object):
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
 
-# class
+
+class ZufangRedisMiddleware(object):
+    # 将列表页的每个url放到redis的set类型中，防止重复爬取
+
+    def __init__(self):
+        # 链接redis
+        self.redis = redis.StrictRedis(host='127.0.0.1', port=27017, db="Danke")
+
+    def process_request(self, spider, request):
+
+        # 将详情页的链接储存在Redis
+        if request.url.endswith('.html'):
+            # MD5加密详情页链接
+            url_md5 = hashlib.md5(request.url.encode()).hexdigest()
+
+            # 添加到redis，成功返回True，失败False
+            result = self.redis.sadd('sk_url',url_md5)
+
+            if not result:
+                raise IgnoreRequest

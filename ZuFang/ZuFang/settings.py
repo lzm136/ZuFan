@@ -14,6 +14,10 @@ BOT_NAME = 'ZuFang'
 SPIDER_MODULES = ['ZuFang.spiders']
 NEWSPIDER_MODULE = 'ZuFang.spiders'
 
+MONGO_HOST = "127.0.0.1"
+MONGO_PORT = 27017
+MONGO_DBNAME = "Danke"
+MONGO_COLNAME = "danke"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ZuFang (+http://www.yourdomain.com)'
@@ -39,10 +43,12 @@ ROBOTSTXT_OBEY = True
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
+DEFAULT_REQUEST_HEADERS = {
+   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+   'Accept-Language': 'en',
+   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
+   
+}
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
@@ -66,7 +72,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'ZuFang.pipelines.ZufangPipeline': 300,
+   # 'ZuFang.pipelines.ZufangPipeline': 300,
+   'ZuFang.pipelines.ZuFangMongoPipeline': 300,
 }
 
 

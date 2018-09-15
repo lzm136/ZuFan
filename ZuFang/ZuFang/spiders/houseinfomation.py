@@ -35,23 +35,23 @@ class HouseinfomationSpider(CrawlSpider):
             # 月租金
             item['monthly_rent'] = node.xpath('./div[3]/div[2]/div[1]/div/text()').extract_first()
             # 首月租金
-            item['first_rent'] = node.xpath('./div[3]/div[2]/div[2]/div/text()').extract_first()
+            item['first_rent'] = node.xpath('./div[3]/div[2]/div[2]/div/text()').extract_first().strip() + '元/月'
             # 面积
-            item['area'] = node.xpath('./div[3]/div[1]/div[1]/label/text()').extract_first()
+            item['area'] = node.xpath('./div[4]/div[1]/div[1]/label/text()').extract_first().split(':')[-1]
             # 编号
-            item['serial_number'] = node.xpath('./div[3]/div[1]/div[2]/label/text()').extract_first()
+            item['serial_number'] = node.xpath('./div[4]/div[1]/div[2]/label/text()').extract_first().split(':')[-1]
             # 户型
-            item['door_model'] = node.xpath('./div[3]/div[1]/div[3]/label/text()').extract_first()
+            item['door_model'] = node.xpath('./div[4]/div[1]/div[3]/label/text()').extract_first().strip().split(':')[-1]
             # 朝向
-            item['toward'] = node.xpath('./div[3]/div[2]/div[1]/label/text()').extract_first()
+            item['toward'] = node.xpath('./div[4]/div[2]/div[1]/label/text()').extract_first().split(':')[-1]
             # 出租类型
-            item['lease_type'] = node.xpath('./div[3]/div[1]/div[3]/label/b/text()').extract_first()
+            item['lease_type'] = node.xpath('./div[4]/div[1]/div[3]/label/b/text()').extract_first().split(':')[-1]
             # 楼层
-            item['floor'] = node.xpath('./div[3]/div[2]/div[2]/label/text()').extract_first()
+            item['floor'] = node.xpath('./div[4]/div[2]/div[2]/label/text()').extract_first().split(':')[-1]
             # 区域
-            item['location'] = node.xpath('./div[3]/div[2]/div[3]/label/div/a/text()').extract_first()
+            item['location'] = node.xpath('./div[4]/div[2]/div[3]/label/div/a/text()').extract_first().split(':')[-1]
             # 地铁
-            item['the_subway'] = node.xpath('./div[3]/div[2]/div[4]/label/text()').extract_first()
+            item['the_subway'] = node.xpath('./div[4]/div[2]/div[4]/label/text()').extract_first().split(':')[-1]
 
             yield item
 
